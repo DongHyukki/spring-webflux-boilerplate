@@ -25,4 +25,10 @@ class TestController(
         deferredThrow.await()
         "kk"
     }
+
+    @GetMapping("/test/exception/hyuki")
+    suspend fun testHyukiException(): String = coroutineScope {
+        testService.throwHyukiException()
+        "kk"
+    }
 }

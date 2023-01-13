@@ -42,11 +42,18 @@ class GlobalExceptionHandler(
     }
 
     fun renderErrorResponse(request: ServerRequest): Mono<ServerResponse> {
-        val errorPropertiesMap = getErrorAttributes(request, ErrorAttributeOptions.defaults())
-        val httpStatus = HttpStatus.valueOf(errorPropertiesMap["status"] as Int)
+        val errorPropertiesMap = getErrorAttributes(
+            request,
+            ErrorAttributeOptions.defaults()
+        )
+        val httpStatus: HttpStatus = (errorPropertiesMap["status"] as? HttpStatus)
+            ?: HttpStatus.valueOf(errorPropertiesMap["status"] as Int)
+
+        val code = errorPropertiesMap["code"] ?: httpStatus.toCode()
+
         val failResponseBody = HyukiResponseBody(
             data = errorPropertiesMap["message"],
-            code = httpStatus.toCode()
+            code = code.toString()
         )
 
         return ServerResponse.status(httpStatus)

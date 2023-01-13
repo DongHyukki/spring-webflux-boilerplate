@@ -1,5 +1,6 @@
 package com.donghyukki.presentation.common.handler
 
+import com.donghyukki.application.common.exception.HyukiRuntimeException
 import org.springframework.boot.web.error.ErrorAttributeOptions
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes
 import org.springframework.core.annotation.Order
@@ -13,7 +14,15 @@ class GlobalErrorAttributes : DefaultErrorAttributes() {
     override fun getErrorAttributes(request: ServerRequest?, options: ErrorAttributeOptions?): MutableMap<String, Any> {
         val attributes = super.getErrorAttributes(request, options)
         val throwable = getError(request)
-        attributes["message"] = throwable.message
+
+        (throwable as? HyukiRuntimeException)?.let {
+            attributes["message"] = it.getType().message
+            attributes["status"] = it.getType().status
+            attributes["code"] = it.getType().code
+        } ?: run {
+            attributes["message"] = throwable.message
+        }
+
         return attributes
     }
 }
