@@ -11,16 +11,22 @@ import org.springframework.web.reactive.function.server.ServerRequest
 @Order(-1)
 class GlobalErrorAttributes : DefaultErrorAttributes() {
 
+    companion object {
+        const val ERROR_RESPONSE_STATUS_KEY = "status"
+        const val ERROR_RESPONSE_MESSAGE_KEY = "message"
+        const val ERROR_RESPONSE_CODE_KEY = "code"
+    }
+
     override fun getErrorAttributes(request: ServerRequest?, options: ErrorAttributeOptions?): MutableMap<String, Any> {
         val attributes = super.getErrorAttributes(request, options)
         val throwable = getError(request)
 
         (throwable as? HyukiRuntimeException)?.let {
-            attributes["message"] = it.getType().message
-            attributes["status"] = it.getType().status
-            attributes["code"] = it.getType().code
+            attributes[ERROR_RESPONSE_STATUS_KEY] = it.getType().message
+            attributes[ERROR_RESPONSE_MESSAGE_KEY] = it.getType().status
+            attributes[ERROR_RESPONSE_CODE_KEY] = it.getType().code
         } ?: run {
-            attributes["message"] = throwable.message
+            attributes[ERROR_RESPONSE_MESSAGE_KEY] = throwable.message
         }
 
         return attributes

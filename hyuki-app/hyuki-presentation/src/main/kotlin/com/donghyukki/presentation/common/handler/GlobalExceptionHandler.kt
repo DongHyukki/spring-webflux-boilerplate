@@ -2,6 +2,9 @@ package com.donghyukki.presentation.common.handler
 
 import com.donghyukki.presentation.common.dto.response.HyukiResponseBody
 import com.donghyukki.presentation.common.dto.response.toCode
+import com.donghyukki.presentation.common.handler.GlobalErrorAttributes.Companion.ERROR_RESPONSE_CODE_KEY
+import com.donghyukki.presentation.common.handler.GlobalErrorAttributes.Companion.ERROR_RESPONSE_MESSAGE_KEY
+import com.donghyukki.presentation.common.handler.GlobalErrorAttributes.Companion.ERROR_RESPONSE_STATUS_KEY
 import org.springframework.boot.autoconfigure.web.WebProperties
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler
 import org.springframework.boot.web.error.ErrorAttributeOptions
@@ -31,6 +34,7 @@ class GlobalExceptionHandler(
     WebProperties.Resources(),
     applicationContext,
 ) {
+
     override fun afterPropertiesSet() {
         super.setMessageWriters(serverCodecConfigurer.writers)
         super.setMessageReaders(serverCodecConfigurer.readers)
@@ -46,13 +50,14 @@ class GlobalExceptionHandler(
             request,
             ErrorAttributeOptions.defaults()
         )
-        val httpStatus: HttpStatus = (errorPropertiesMap["status"] as? HttpStatus)
-            ?: HttpStatus.valueOf(errorPropertiesMap["status"] as Int)
 
-        val code = errorPropertiesMap["code"] ?: httpStatus.toCode()
+        val httpStatus: HttpStatus = (errorPropertiesMap[ERROR_RESPONSE_STATUS_KEY] as? HttpStatus)
+            ?: HttpStatus.valueOf(errorPropertiesMap[ERROR_RESPONSE_STATUS_KEY] as Int)
+
+        val code = errorPropertiesMap[ERROR_RESPONSE_CODE_KEY] ?: httpStatus.toCode()
 
         val failResponseBody = HyukiResponseBody(
-            data = errorPropertiesMap["message"],
+            data = errorPropertiesMap[ERROR_RESPONSE_MESSAGE_KEY],
             code = code.toString()
         )
 
