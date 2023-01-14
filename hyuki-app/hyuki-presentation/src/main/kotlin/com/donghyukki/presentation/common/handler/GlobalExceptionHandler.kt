@@ -61,6 +61,8 @@ class GlobalExceptionHandler(
             code = code.toString()
         )
 
+        // 에러  로그는 여기서 찍자 개노답이네 ㅠㅠ
+
         return ServerResponse.status(httpStatus)
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(failResponseBody))

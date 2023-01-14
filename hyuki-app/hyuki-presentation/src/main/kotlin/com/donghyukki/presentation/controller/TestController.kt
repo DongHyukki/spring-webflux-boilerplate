@@ -3,6 +3,7 @@ package com.donghyukki.presentation.controller
 import com.donghyukki.application.TestService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -20,6 +21,7 @@ class TestController(
 
     @PostMapping("/test/post")
     suspend fun testPost(@RequestBody body: Map<String, *>): Map<String, String> {
+        delay(3000L)
         return mapOf("key1" to "data1", "key2" to "data2", "key3" to "data3")
     }
 

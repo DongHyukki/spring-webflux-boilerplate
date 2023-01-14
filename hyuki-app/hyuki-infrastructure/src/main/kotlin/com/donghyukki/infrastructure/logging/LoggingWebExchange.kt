@@ -13,8 +13,21 @@ class LoggingWebExchange(
     traceId: String,
     startAt: LocalDateTime
 ) : ServerWebExchangeDecorator(delegate) {
-    private val requestDecorator: LoggingRequestDecorator = LoggingRequestDecorator(logger, delegate.request, traceId, startAt)
-    private val responseDecorator: LoggingResponseDecorator = LoggingResponseDecorator(logger, delegate.response, traceId, startAt)
+    private val requestDecorator: LoggingRequestDecorator =
+        LoggingRequestDecorator(
+            logger = logger,
+            delegate = delegate.request,
+            traceId = traceId,
+            startAt = startAt
+        )
+    private val responseDecorator: LoggingResponseDecorator =
+        LoggingResponseDecorator(
+            logger = logger,
+            delegate = delegate.response,
+            traceId = traceId,
+            startAt = startAt
+        )
+
     override fun getRequest(): ServerHttpRequest {
         return requestDecorator
     }

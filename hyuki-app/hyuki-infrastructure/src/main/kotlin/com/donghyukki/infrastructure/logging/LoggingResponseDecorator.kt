@@ -24,7 +24,6 @@ class LoggingResponseDecorator(
 ) : ServerHttpResponseDecorator(delegate) {
 
     override fun writeWith(body: Publisher<out DataBuffer>): Mono<Void> {
-
         return super.writeWith(
             Flux.from(body)
                 .publishOn(Schedulers.boundedElastic())
