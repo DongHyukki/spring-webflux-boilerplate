@@ -5,7 +5,7 @@ plugins {
     kotlin("plugin.spring") version "1.7.22" apply false
 
     id("org.springframework.boot") version "3.0.1" apply false
-    id("io.spring.dependency-management") version "1.1.0" apply false
+    id("io.spring.dependency-management") version "1.1.0"
 
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
@@ -21,6 +21,7 @@ allprojects {
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
+val springCloudVersion = "2022.0.0"
 
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
@@ -39,6 +40,12 @@ subprojects {
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.projectreactor:reactor-test")
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+        }
     }
 
     tasks.getByName("bootJar") {

@@ -3,14 +3,24 @@ package com.donghyukki.application
 import com.donghyukki.application.common.exception.GeneralExceptionType
 import com.donghyukki.application.common.exception.HyukiRuntimeException
 import kotlinx.coroutines.delay
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
 class TestService {
 
+    val logger = LoggerFactory.getLogger(TestService::class.java)
+
     suspend fun justRun() {
-        println("Just Run Called")
+        logger.info("Just Run Called")
+        // currentCoroutineContext()[ReactorContext].get()
+        // println("traceId = ${Tracing.current().currentTraceContext().get().traceId()}")
+    }
+
+    suspend fun justRunWithDelay() {
+        logger.info("Delay Just Run Called")
+        // println("traceId = ${Tracing.current().currentTraceContext().get().traceId()}")
         delay(1000L)
     }
 

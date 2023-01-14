@@ -1,2 +1,7 @@
 server:
   port: 6060
+
+logging:
+  pattern:
+    level: "trace_id=%X{traceId}"
+
