@@ -2,6 +2,7 @@ package com.donghyukki.application
 
 import com.donghyukki.application.common.exception.GeneralExceptionType
 import com.donghyukki.application.common.exception.HyukiRuntimeException
+import com.donghyukki.infrastructure.context.MdcContextHolder
 import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -14,13 +15,17 @@ class TestService {
 
     suspend fun justRun() {
         logger.info("Just Run Called")
-        // currentCoroutineContext()[ReactorContext].get()
-        // println("traceId = ${Tracing.current().currentTraceContext().get().traceId()}")
+        MdcContextHolder.set(
+            "test-run",
+            "test-run-value"
+        )
+        println("MdcContextHolder.get(\"test\") = ${MdcContextHolder.get("test")}")
     }
 
     suspend fun justRunWithDelay() {
         logger.info("Delay Just Run Called")
-        // println("traceId = ${Tracing.current().currentTraceContext().get().traceId()}")
+        println("MdcContextHolder.get(\"test\") = ${MdcContextHolder.get("test")}")
+        println("MdcContextHolder.get(\"test-run\") = ${MdcContextHolder.get("test-run")}")
         delay(1000L)
     }
 

@@ -3,6 +3,8 @@ package com.donghyukki.presentation.common.dto.response
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.util.MultiValueMap
+import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 
 data class HyukiResponse<T>(
     val body: HyukiResponseBody<T>?,
@@ -15,33 +17,33 @@ data class HyukiResponse<T>(
     constructor(body: HyukiResponseBody<T>, status: HttpStatus) : this(body, null, status)
 
     companion object {
-        fun success(): HyukiResponse<Unit> {
-            return HyukiResponse(HyukiResponseBody())
+        fun success(): Mono<HyukiResponse<Unit>> {
+            return HyukiResponse<Unit>(HyukiResponseBody()).toMono()
         }
 
-        fun <T> success(body: T): HyukiResponse<T> {
-            return HyukiResponse(HyukiResponseBody(body))
+        fun <T> success(body: T): Mono<HyukiResponse<T>> {
+            return HyukiResponse(HyukiResponseBody(body)).toMono()
         }
 
-        fun <T> success(body: HyukiResponseBody<T>): HyukiResponse<T> {
-            return HyukiResponse(body = body)
+        fun <T> success(body: HyukiResponseBody<T>): Mono<HyukiResponse<T>> {
+            return HyukiResponse(body = body).toMono()
         }
 
-        fun <T> success(body: T, httpStatus: HttpStatus): HyukiResponse<T> {
+        fun <T> success(body: T, httpStatus: HttpStatus): Mono<HyukiResponse<T>> {
             return HyukiResponse(
                 body = HyukiResponseBody(body),
                 status = httpStatus
-            )
+            ).toMono()
         }
 
-        fun <T> success(body: HyukiResponseBody<T>, httpStatus: HttpStatus): HyukiResponse<T> {
+        fun <T> success(body: HyukiResponseBody<T>, httpStatus: HttpStatus): Mono<HyukiResponse<T>> {
             return HyukiResponse(
                 body = body,
                 status = httpStatus
-            )
+            ).toMono()
         }
 
-        fun <T> fail(body: T, httpStatus: HttpStatus, code: String?): HyukiResponse<T> {
+        fun <T> fail(body: T, httpStatus: HttpStatus, code: String?): Mono<HyukiResponse<T>> {
             return HyukiResponse(
                 body = HyukiResponseBody(
                     code = code.takeIf { !it.isNullOrBlank() }
@@ -49,7 +51,7 @@ data class HyukiResponse<T>(
                     data = body
                 ),
                 status = httpStatus
-            )
+            ).toMono()
         }
     }
 }
