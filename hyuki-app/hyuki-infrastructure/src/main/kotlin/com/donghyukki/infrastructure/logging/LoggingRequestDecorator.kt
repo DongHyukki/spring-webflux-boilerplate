@@ -20,7 +20,7 @@ class LoggingRequestDecorator(
     private val logger: Logger,
     delegate: ServerHttpRequest,
     private val traceId: String,
-    private val startAt: LocalDateTime
+    private val requestAt: LocalDateTime
 ) : ServerHttpRequestDecorator(delegate) {
 
     private val body: Flux<DataBuffer>?
@@ -36,11 +36,12 @@ class LoggingRequestDecorator(
                 Channels.newChannel(bodyStream).write(buffer.toByteBuffer().asReadOnlyBuffer())
                 val body = ObjectMapper().readValue(bodyStream.toByteArray(), Map::class.java)
                 val requestLoggingInfo = RequestLoggingInfo(
-                    url = delegate.uri.path + (if (StringUtils.hasText(delegate.uri.query)) "?${delegate.uri.query}" else ""),
+                    url = delegate.uri.path +
+                        (if (StringUtils.hasText(delegate.uri.query)) "?${delegate.uri.query}" else ""),
                     method = Optional.ofNullable(delegate.method).orElse(HttpMethod.GET).name(),
                     headers = delegate.headers,
                     traceId = traceId,
-                    startAt = startAt.toString(),
+                    startAt = requestAt.toString(),
                     body = ObjectMapper().writeValueAsString(body)
                 )
                 logger.info("", StructuredArguments.value("request", requestLoggingInfo))

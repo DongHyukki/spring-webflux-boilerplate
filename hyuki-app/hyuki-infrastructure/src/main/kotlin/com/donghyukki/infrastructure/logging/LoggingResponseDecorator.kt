@@ -20,7 +20,7 @@ class LoggingResponseDecorator(
     private val logger: Logger,
     delegate: ServerHttpResponse,
     private val traceId: String,
-    private val startAt: LocalDateTime
+    private val requestAt: LocalDateTime
 ) : ServerHttpResponseDecorator(delegate) {
 
     override fun writeWith(body: Publisher<out DataBuffer>): Mono<Void> {
@@ -34,9 +34,9 @@ class LoggingResponseDecorator(
 
                     val responseLoggingInfo = ResponseLoggingInfo(
                         traceId = traceId,
-                        startAt = startAt.toString(),
+                        startAt = requestAt.toString(),
                         headers = delegate.headers,
-                        duration = startAt.until(LocalDateTime.now(), ChronoUnit.MILLIS),
+                        duration = requestAt.until(LocalDateTime.now(), ChronoUnit.MILLIS),
                         body = ObjectMapper().writeValueAsString(body)
                     )
 
