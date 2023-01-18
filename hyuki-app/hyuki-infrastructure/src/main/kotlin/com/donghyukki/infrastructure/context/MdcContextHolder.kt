@@ -2,6 +2,7 @@ package com.donghyukki.infrastructure.context
 
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.reactor.ReactorContext
+import org.slf4j.MDC
 
 object MdcContextHolder {
 
@@ -25,5 +26,14 @@ object MdcContextHolder {
         return currentCoroutineContext()[ReactorContext]
             ?.context
             ?.hasKey(key) ?: false
+    }
+
+    fun getFromMDC(key: String): String {
+        return MDC.getCopyOfContextMap()[key]
+            ?: throw IllegalArgumentException("not found key in MDC context")
+    }
+
+    fun putToMDC(key: String, value: String) {
+        return MDC.put(key, value)
     }
 }

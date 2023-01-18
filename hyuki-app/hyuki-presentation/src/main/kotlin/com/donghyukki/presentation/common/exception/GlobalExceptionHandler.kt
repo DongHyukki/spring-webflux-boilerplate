@@ -1,10 +1,10 @@
-package com.donghyukki.presentation.common.handler
+package com.donghyukki.presentation.common.exception
 
 import com.donghyukki.presentation.common.dto.response.HyukiResponseBody
 import com.donghyukki.presentation.common.dto.response.toCode
-import com.donghyukki.presentation.common.handler.GlobalErrorAttributes.Companion.ERROR_RESPONSE_CODE_KEY
-import com.donghyukki.presentation.common.handler.GlobalErrorAttributes.Companion.ERROR_RESPONSE_MESSAGE_KEY
-import com.donghyukki.presentation.common.handler.GlobalErrorAttributes.Companion.ERROR_RESPONSE_STATUS_KEY
+import com.donghyukki.presentation.common.exception.GlobalErrorAttributes.Companion.ERROR_RESPONSE_CODE_KEY
+import com.donghyukki.presentation.common.exception.GlobalErrorAttributes.Companion.ERROR_RESPONSE_MESSAGE_KEY
+import com.donghyukki.presentation.common.exception.GlobalErrorAttributes.Companion.ERROR_RESPONSE_STATUS_KEY
 import org.springframework.boot.autoconfigure.web.WebProperties
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler
 import org.springframework.boot.web.error.ErrorAttributeOptions
@@ -60,8 +60,6 @@ class GlobalExceptionHandler(
             data = errorPropertiesMap[ERROR_RESPONSE_MESSAGE_KEY],
             code = code.toString()
         )
-
-        // 에러  로그는 여기서 찍자 개노답이네 ㅠㅠ
 
         return ServerResponse.status(httpStatus)
             .contentType(MediaType.APPLICATION_JSON)

@@ -1,6 +1,7 @@
-package com.donghyukki.presentation.common.handler
+package com.donghyukki.presentation.common.exception
 
 import com.donghyukki.application.common.exception.HyukiRuntimeException
+import org.slf4j.MDC
 import org.springframework.boot.web.error.ErrorAttributeOptions
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes
 import org.springframework.core.annotation.Order
@@ -15,11 +16,17 @@ class GlobalErrorAttributes : DefaultErrorAttributes() {
         const val ERROR_RESPONSE_STATUS_KEY = "status"
         const val ERROR_RESPONSE_MESSAGE_KEY = "message"
         const val ERROR_RESPONSE_CODE_KEY = "code"
+        const val ERROR_REQUEST_HEADER_KEY = "headers"
+        const val ERROR_RESPONSE_TRACE_ID_KEY = "traceId"
+        const val ERROR_RESPONSE_REQUEST_AT_KEY = "requestAt"
     }
 
     override fun getErrorAttributes(request: ServerRequest?, options: ErrorAttributeOptions?): MutableMap<String, Any> {
         val attributes = super.getErrorAttributes(request, options)
         val throwable = getError(request)
+        val headers = request?.headers()
+        attributes[ERROR_REQUEST_HEADER_KEY] = headers
+        attributes[ERROR_RESPONSE_TRACE_ID_KEY] = MDC.get("traceId")
 
         (throwable as? HyukiRuntimeException)?.let {
             attributes[ERROR_RESPONSE_STATUS_KEY] = it.getType().message

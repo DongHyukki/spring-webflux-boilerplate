@@ -7,7 +7,6 @@ import reactor.core.publisher.Operators
 
 @Configuration
 class MdcContextLifterConfiguration {
-
     companion object {
         val MDC_CONTEXT_REACTOR_KEY: String = MdcContextLifterConfiguration::class.java.name
     }

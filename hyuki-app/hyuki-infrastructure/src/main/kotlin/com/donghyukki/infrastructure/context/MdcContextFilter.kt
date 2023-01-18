@@ -25,8 +25,8 @@ class MdcContextFilter : WebFilter {
         val traceId = UUID.randomUUID().toString()
         val requestAt = LocalDateTime.now()
         val contextData = ConcurrentHashMap<String, String>()
-        MDC.put(CONTEXT_REQUEST_AT_KEY, requestAt.toString())
-        MDC.put(CONTEXT_TRACE_ID_KEY, traceId)
+        MdcContextHolder.putToMDC(CONTEXT_REQUEST_AT_KEY, requestAt.toString())
+        MdcContextHolder.putToMDC(CONTEXT_TRACE_ID_KEY, traceId)
 
         return chain.filter(exchange).contextWrite {
             Context.of(
