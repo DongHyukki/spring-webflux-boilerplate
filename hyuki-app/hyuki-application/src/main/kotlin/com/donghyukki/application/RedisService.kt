@@ -11,4 +11,9 @@ class RedisService(
     suspend fun setValue(key: String, value: Any): Boolean {
         return redisPersistent.setValue(key, value)
     }
+
+    suspend fun getValue(key: String): Map<String, String> {
+        println("service = ${Thread.currentThread().name}")
+        return redisPersistent.getValue(key)
+    }
 }

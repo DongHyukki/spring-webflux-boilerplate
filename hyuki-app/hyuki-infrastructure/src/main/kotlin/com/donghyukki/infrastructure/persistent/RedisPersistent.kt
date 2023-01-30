@@ -14,4 +14,10 @@ class RedisPersistent(
         val jsonStr = HyukiObjectMapper.toJsonString(value)
         return reactiveRedisTemplate.opsForValue().set(key, jsonStr).awaitSingle()
     }
+
+    suspend fun getValue(key: String): Map<String, String> {
+        println("jackson = ${Thread.currentThread().name}")
+        val value = reactiveRedisTemplate.opsForValue().get(key).awaitSingle()
+        return HyukiObjectMapper.toObject(value)
+    }
 }

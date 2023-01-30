@@ -13,6 +13,7 @@ fun main(args: Array<String>) {
     BlockHound.builder()
         .with(CoroutinesBlockHoundIntegration())
         .allowBlockingCallsInside(MdcContextFilter::class.simpleName, "filter")
+        .install()
 
     runApplication<SpringWebfluxBoilerplateApplication>(*args)
 }
