@@ -1,4 +1,4 @@
-package com.donghyukki.infrastructure.logging
+package com.donghyukki.infrastructure.global.logging
 
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.http.server.reactive.ServerHttpResponse

@@ -1,8 +1,8 @@
-package com.donghyukki.infrastructure.logging
+package com.donghyukki.infrastructure.global.logging
 
-import com.donghyukki.infrastructure.context.MdcContextFilter.Companion.CONTEXT_REQUEST_AT_KEY
-import com.donghyukki.infrastructure.context.MdcContextFilter.Companion.CONTEXT_TRACE_ID_KEY
-import com.donghyukki.infrastructure.context.MdcContextHolder
+import com.donghyukki.infrastructure.global.context.MdcContextFilter.Companion.CONTEXT_REQUEST_AT_KEY
+import com.donghyukki.infrastructure.global.context.MdcContextFilter.Companion.CONTEXT_TRACE_ID_KEY
+import com.donghyukki.infrastructure.global.context.MdcContextHolder
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.logstash.logback.argument.StructuredArguments
 import org.slf4j.LoggerFactory

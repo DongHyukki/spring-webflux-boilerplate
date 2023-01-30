@@ -1,4 +1,4 @@
-package com.donghyukki.infrastructure.debug
+package com.donghyukki.infrastructure.global.debug
 
 import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.autoconfigure.condition.ConditionEvaluationReport

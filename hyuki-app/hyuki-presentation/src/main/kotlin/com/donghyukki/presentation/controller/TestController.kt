@@ -1,7 +1,7 @@
 package com.donghyukki.presentation.controller
 
 import com.donghyukki.application.TestService
-import com.donghyukki.infrastructure.context.MdcContextHolder
+import com.donghyukki.infrastructure.global.context.MdcContextHolder
 import com.donghyukki.presentation.common.dto.response.HyukiResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

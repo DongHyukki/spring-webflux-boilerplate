@@ -1,4 +1,4 @@
-package com.donghyukki.infrastructure.context
+package com.donghyukki.infrastructure.global.context
 
 import org.slf4j.MDC
 import org.springframework.core.annotation.Order

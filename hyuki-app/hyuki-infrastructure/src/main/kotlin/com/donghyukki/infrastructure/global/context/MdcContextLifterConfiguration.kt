@@ -1,4 +1,4 @@
-import com.donghyukki.infrastructure.context.MdcContextLifter
+import com.donghyukki.infrastructure.global.context.MdcContextLifter
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
 import org.springframework.context.annotation.Configuration

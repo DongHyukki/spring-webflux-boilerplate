@@ -1,4 +1,4 @@
-package com.donghyukki.infrastructure.logging
+package com.donghyukki.infrastructure.global.logging
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.logstash.logback.argument.StructuredArguments
