@@ -22,13 +22,13 @@ class MdcContextFilter : WebFilter {
     }
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
-        val traceId = UUID.randomUUID().toString()
-        val requestAt = LocalDateTime.now()
-        val contextData = ConcurrentHashMap<String, String>()
-        MdcContextHolder.putToMDC(CONTEXT_REQUEST_AT_KEY, requestAt.toString())
-        MdcContextHolder.putToMDC(CONTEXT_TRACE_ID_KEY, traceId)
-
         return chain.filter(exchange).contextWrite {
+            val traceId = UUID.randomUUID().toString()
+            val requestAt = LocalDateTime.now()
+            val contextData = ConcurrentHashMap<String, String>()
+            MdcContextHolder.putToMDC(CONTEXT_REQUEST_AT_KEY, requestAt.toString())
+            MdcContextHolder.putToMDC(CONTEXT_TRACE_ID_KEY, traceId)
+
             Context.of(
                 CONTEXT_TRACE_ID_KEY, traceId,
                 CONTEXT_REQUEST_AT_KEY, requestAt,

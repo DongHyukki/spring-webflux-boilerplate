@@ -1,3 +1,4 @@
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -40,6 +41,9 @@ subprojects {
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.projectreactor:reactor-test")
+
+        implementation("io.projectreactor.tools:blockhound:1.0.7.RELEASE")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
     }
 
     dependencyManagement {

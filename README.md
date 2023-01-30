@@ -14,3 +14,4 @@ Webflux 기반의 보일러 플레이트를 작성합니다.
 - [x] 전역 에러 핸들링 처리
 - [x] Request, Response 로깅
 - [ ] Redis Reactive Client
+- [x] BlockHound 를 통한 Blocking Call 확인
