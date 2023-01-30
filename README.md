@@ -8,7 +8,7 @@ Webflux 기반의 보일러 플레이트를 작성합니다.
 - ktlint
 
 <h4>Todo List</h4>
-- [ ] 패키지 레이어 모듈 구성
-- [ ] 전역 에러 핸들링 처리
-- [ ] Request, Response 로깅
+- [x] 패키지 레이어 모듈 구성
+- [x] 전역 에러 핸들링 처리
+- [x] Request, Response 로깅
 - [ ] Redis Reactive Client
