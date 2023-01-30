@@ -37,10 +37,12 @@ class ReactiveRedisConfig {
 
     @Bean
     fun reactiveRedisConnectionFactory(): ReactiveRedisConnectionFactory {
-        return LettuceConnectionFactory(
+        val factory = LettuceConnectionFactory(
             RedisStandaloneConfiguration(
                 hostName, port
             )
         )
+        factory.eagerInitialization = true
+        return factory
     }
 }

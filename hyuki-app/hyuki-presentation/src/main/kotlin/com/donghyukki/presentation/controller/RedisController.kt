@@ -2,7 +2,9 @@ package com.donghyukki.presentation.controller
 
 import com.donghyukki.application.RedisService
 import com.donghyukki.presentation.common.dto.response.HyukiResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -22,10 +24,9 @@ class RedisController(
     }
 
     @GetMapping("redis/{key}")
-    suspend fun get(@PathVariable key: String): Mono<HyukiResponse<Map<String, String>>> {
-        println("controller = ${Thread.currentThread().name}")
+    suspend fun get(@PathVariable key: String): Mono<HyukiResponse<Map<String, String>>> = withContext(Dispatchers.Default) {
         val value = redisService.getValue(key)
-        return HyukiResponse.success(value)
+        HyukiResponse.success(value)
     }
 }
 

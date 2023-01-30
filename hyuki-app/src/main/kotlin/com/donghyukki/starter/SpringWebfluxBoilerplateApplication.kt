@@ -5,6 +5,7 @@ import kotlinx.coroutines.debug.CoroutinesBlockHoundIntegration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import reactor.blockhound.BlockHound
+import java.io.PrintStream
 
 @SpringBootApplication(scanBasePackages = ["com.donghyukki"])
 class SpringWebfluxBoilerplateApplication
@@ -12,7 +13,8 @@ class SpringWebfluxBoilerplateApplication
 fun main(args: Array<String>) {
     BlockHound.builder()
         .with(CoroutinesBlockHoundIntegration())
-        .allowBlockingCallsInside(MdcContextFilter::class.simpleName, "filter")
+        .allowBlockingCallsInside(MdcContextFilter::class.qualifiedName, "filter")
+        .allowBlockingCallsInside(PrintStream::class.qualifiedName, "println")
         .install()
 
     runApplication<SpringWebfluxBoilerplateApplication>(*args)
